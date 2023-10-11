@@ -21,5 +21,9 @@ export class AuthService {
   public register( name:string, email:string, password:string ) {
     return this.http.post(`${this.API_URL}/auth/register`, { name, email, password });
   }
+  
+  public isAvailableUser( email:string ) {
+    return this.http.post<{isAvailable:boolean}>(`${this.API_URL}/auth/is-available`, { email });
+  }
 
 }
