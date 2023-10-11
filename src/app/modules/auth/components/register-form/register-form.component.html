@@ -96,7 +96,7 @@
         *ngIf="form.controls.confirmPassword.hasError('minlength')"
         class="font-medium text-red-500 text-xs mt-1 ml-1"
       >
-        This field should be greater than 6 characters
+        This field should be greater than 8 characters
       </p>
     </div>
   </div>
@@ -108,9 +108,16 @@
       The password are not the same
     </p>
   </div>
+
+  <div *ngIf=" status == 'error' ">
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      {{ errorMsg }}
+    </p>
+  </div>
+
   <div>
-    <app-btn typeBtn="submit" color="success" [loading]="status === 'loading'"
-      >Register</app-btn
-    >
+    <app-btn typeBtn="submit" color="success" [loading]="status === 'loading'">
+      Register
+    </app-btn>
   </div>
 </form>

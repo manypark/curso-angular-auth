@@ -18,4 +18,8 @@ export class AuthService {
     return this.http.post<Login>(`${this.API_URL}/auth/login`, {email, password});
   }
 
+  public register( name:string, email:string, password:string ) {
+    return this.http.post(`${this.API_URL}/auth/register`, { name, email, password });
+  }
+
 }
