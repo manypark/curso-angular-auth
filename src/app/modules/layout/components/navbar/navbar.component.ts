@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 import {
   faBell,
   faInfoCircle,
@@ -11,6 +13,10 @@ import {
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+
+  authServices = inject(AuthService);
+  router       = inject(Router);
+
   faBell = faBell;
   faInfoCircle = faInfoCircle;
   faClose = faClose;
@@ -19,5 +25,8 @@ export class NavbarComponent {
   isOpenOverlayAvatar = false;
   isOpenOverlayBoards = false;
 
-  constructor() {}
+  logout() {
+    this.authServices.logout();
+    this.router.navigateByUrl('/login');
+  }
 }
