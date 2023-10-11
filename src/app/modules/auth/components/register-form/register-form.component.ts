@@ -48,10 +48,11 @@ export class RegisterFormComponent {
 
       const { name, email, password } = this.form.getRawValue();
 
-      this.authServices.register( name, email, password ).subscribe({
+      this.authServices.registerAndLogin( name, email, password ).subscribe({
         next: () => {
           this.status = 'success';
-          this.router.navigateByUrl('/login');
+          this.router.navigateByUrl('/app/boards');
+          // this.router.navigateByUrl('/login');
         },
         error: ( err ) => {
 
@@ -85,6 +86,7 @@ export class RegisterFormComponent {
           this.showRegister = true;
           this.form.controls.email.setValue(email);
         } else {
+
           this.router.navigate(['/login'], {
             queryParams: { email }
           });

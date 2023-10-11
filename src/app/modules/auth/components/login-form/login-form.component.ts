@@ -13,7 +13,7 @@ import { RequestType } from '@auth/models/request-status';
 export class LoginFormComponent {
 
   form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.email, Validators.required]],
+    email   : ['', [ Validators.email, Validators.required]],
     password: ['', [ Validators.required, Validators.minLength(6)]],
   });
   faPen = faPen;
