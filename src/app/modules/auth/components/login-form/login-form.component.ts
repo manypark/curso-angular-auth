@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faPen, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
+import { AuthService } from '@auth/services/auth.service';
+import { RequestType } from '@auth/models/request-status';
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html'
@@ -17,21 +20,36 @@ export class LoginFormComponent {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
   showPassword = false;
-  status: string = 'init';
+  status:RequestType = 'init';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
+    private formBuilder   : FormBuilder,
+    private router        : Router,
+    private loginServices : AuthService
   ) { }
 
   doLogin() {
-    if (this.form.valid) {
-      this.status = 'loading';
-      const { email, password } = this.form.getRawValue();
-      // TODO
-    } else {
+
+    if(!this.form.valid) {
       this.form.markAllAsTouched();
-    }
+      return;
+    };
+
+    this.status = 'loading';
+
+    const { email, password } = this.form.getRawValue();
+
+    this.loginServices.login(email, password).subscribe({
+      next: () => {
+        this.status = 'success';
+        this.router.navigateByUrl('/app');
+      },
+      error: () => {
+        this.status = 'error';
+      }
+    });
+
   }
 
 }
+
