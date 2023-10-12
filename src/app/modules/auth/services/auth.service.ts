@@ -21,7 +21,11 @@ export class AuthService {
 
   public login( email:string, password:string ):Observable<Login> {
     return this.http.post<Login>(`${this.API_URL}/auth/login`, {email, password}).pipe(
-      tap( (res:Login) => this.tokenServices.saveToken(res.access_token) )
+      tap( (res:Login) => {
+          this.tokenServices.saveToken(res.access_token);
+          this.tokenServices.saveRefreshToken(res.refresh_token);
+        }
+      )
     );
   }
 

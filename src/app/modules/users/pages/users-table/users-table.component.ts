@@ -19,4 +19,8 @@ export class UsersTableComponent implements OnInit  {
     this.userServices.getUsers().subscribe( users => this.dataSource.init(users) );
   }
 
+  refresh() {
+    this.userServices.getUsers().subscribe( users => this.dataSource.init(users) );
+  }
+
 }

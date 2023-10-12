@@ -5,10 +5,10 @@ import { TokenService } from '../services/token.service';
 
 export const authGuard = () => {
 
-  const token  = inject(TokenService).getToken();
+  const isValiTtoken  = inject(TokenService).isValidRefreshToken();
   const router = inject(Router);
 
-  if(!token) {
+  if(!isValiTtoken) {
     router.navigateByUrl('/login');
     return false;
   };

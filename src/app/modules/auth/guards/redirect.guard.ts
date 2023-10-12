@@ -5,10 +5,10 @@ import { TokenService } from '../services/token.service';
 
 export const redirectGuard = () => {
 
-  const token  = inject(TokenService).getToken();
+  const isValidToken  = inject(TokenService).isValidRefreshToken();
   const router = inject(Router);
 
-  if(token) {
+  if( isValidToken ) {
     router.navigateByUrl('/app/boards');
   };
 
