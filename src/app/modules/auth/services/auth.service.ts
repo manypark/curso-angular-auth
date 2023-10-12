@@ -69,4 +69,14 @@ export class AuthService {
     return this.user$.getValue();
   }
 
+  refreshToken( refreshToken:string ) {
+    return this.http.post<Login>(`${this.API_URL}/auth/refresh-token`, { refreshToken }).pipe(
+        tap( (res:Login) => {
+            this.tokenServices.saveToken(res.access_token);
+            this.tokenServices.saveRefreshToken(res.refresh_token);
+          }
+        )
+    );
+  }
+
 }
