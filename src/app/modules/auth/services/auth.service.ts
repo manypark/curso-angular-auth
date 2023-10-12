@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
-import { Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 
 import { Login } from '@auth/models/login-model';
 import { environment } from '@environments/environment';
 import { TokenService } from './token.service';
+import { User } from '../../users/models/user-model';
+import { checkToken } from '@interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class AuthService {
   private http          = inject(HttpClient);
   private tokenServices = inject(TokenService);
   private API_URL       = environment.API_URL;
+  public user$          = new BehaviorSubject<User| null>(null);
 
   public login( email:string, password:string ):Observable<Login> {
     return this.http.post<Login>(`${this.API_URL}/auth/login`, {email, password}).pipe(
@@ -47,6 +50,19 @@ export class AuthService {
 
   logout() {
     this.tokenServices.removeToken();
+  }
+
+  profile():Observable<User> {
+
+    return this.http.get<User>(`${this.API_URL}/auth/profile`, {
+      context: checkToken()
+    }).pipe(
+      tap( user => this.user$.next(user) ),
+    );
+  }
+
+  getDataUser() {
+    return this.user$.getValue();
   }
 
 }

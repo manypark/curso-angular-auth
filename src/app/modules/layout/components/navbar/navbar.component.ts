@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth/services/auth.service';
 import {
@@ -25,8 +25,17 @@ export class NavbarComponent {
   isOpenOverlayAvatar = false;
   isOpenOverlayBoards = false;
 
+  user$ = this.authServices.user$;
+
   logout() {
     this.authServices.logout();
     this.router.navigateByUrl('/login');
   }
+
+  // ngOnInit(): void {
+  //   this.authServices.profile().subscribe( user => {
+  //     this.user = user;
+  //   });
+  // }
+
 }

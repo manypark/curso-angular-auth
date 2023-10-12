@@ -16,15 +16,7 @@ export class UsersTableComponent implements OnInit  {
 
 
   ngOnInit(): void {
-
-    this.userServices.getUsers().subscribe({
-      next: (users) => {
-        this.dataSource.init(users);
-      },
-      error: () => {
-
-      }
-    });
+    this.userServices.getUsers().subscribe( users => this.dataSource.init(users) );
   }
 
 }
